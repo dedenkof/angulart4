@@ -30,22 +30,19 @@ Angular перевірить прив’язки ([avatar] і [name]) і оно�
 (select)="onUserSelected($event)" слухає подію select, яку видає UserComponent. Коли подія спрацьовує, Angular викликає метод onUserSelected у AppComponent,
 передаючи аргумент $event (значення, надіслане через .emit()).
 -->
-    <!-- @for (user of users; track user.id) { -->
-    <li *ngFor="let user of users">
+    @for (user of users; track user.id) {
+    <li>
       <app-user [user]="user" (select)="onSelectUser($event)" />
     </li>
-    <!-- } -->
+    }
   </ul>
 
   <!--   <app-tasks [name]="selectedUser?.name" /> або -->
-  <!-- @if(selectedUser) { -->
-  <app-tasks *ngIf="selectedUser; else fallback" [name]="selectedUser!.name" />
-  <!-- }@else { -->
-  <ng-template #fallback>
-    <p id="fallback">Select a user to see their tasks!</p>
-  </ng-template>
-
-  <!-- } -->
+  @if(selectedUser) {
+  <app-tasks [userId]="selectedUser.id" [name]="selectedUser.name" />
+  }@else {
+  <p id="fallback">Select a user to see their tasks!</p>
+  }
 </main>
 
 <!-- Проста схема процесу
