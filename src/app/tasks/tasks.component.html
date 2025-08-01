@@ -1,3 +1,19 @@
 <!-- {{ name }}: Це інтерполяція, яка відображає значення змінної name, передане через @Input.
 	Наприклад, якщо name дорівнює 'Іван', на сторінці з’явиться <h2>Іван</h2>. -->
-<h2>{{ name }}</h2>
+
+<section id="tasks">
+  <header>
+    <h2>{{ name }}</h2>
+    <menu>
+      <button>Add Task</button>
+    </menu>
+  </header>
+
+  <ul>
+    @for (task of selectedUserTasks; track task.id) {
+    <li>
+      <app-task [task]="task" />
+    </li>
+    }
+  </ul>
+</section>
