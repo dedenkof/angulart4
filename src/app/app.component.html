@@ -1,0 +1,61 @@
+<!-- У app.component.html Angular бачить <app-header> і рендерить HeaderComponent (логотип і текст). -->
+<app-header />
+<!-- Є тег <app-user>, який є компонентом UserComponent
+Прив’язки [avatar]="users[0].avatar" і [name]="users[0].name" говорять Angular: "Візьми значення users[0].avatar і users[0].name з класу AppComponent
+і передай їх як вхідні дані (inputs) до компонента <app-user>".
+Наприклад, якщо DUMMY_USERS = [{name: 'Іван', avatar: 'user1.jpg'}, ...], то users[0].avatar буде 'user1.jpg', а users[0].name — 'Іван'.
+Angular бачить, що в AppComponent є властивість users, і дозволяє використовувати її в шаблоні через синтаксис users[0].avatar.
+Ці дані не "передаються" одразу в DOM, а лише стають доступними для прив’язки до дочірнього компонента <app-user>.
+
+Коли Angular рендерить app.component.html і натрапляє на <app-user>, він "розуміє", що це не звичайний HTML-тег,
+а компонент, і звертається до UserComponent для його обробки.
+
+Коли Angular бачить <app-user [avatar]="users[0].avatar" [name]="users[0].name" />, він:
+Бере значення users[0].avatar (наприклад, 'user1.jpg') і присвоює його змінній avatar у UserComponent.
+Бере значення users[0].name (наприклад, 'Іван') і присвоює його змінній name у UserComponent.
+
+Як це передається?
+Angular використовує механізм прив’язки властивостей ([ ]). Він "зв’язує" значення з AppComponent
+(наприклад, users[0].avatar) з відповідними @Input у UserComponent. Це не прямий виклик функції, а синхронізація даних через дерево компонентів.
+-->
+<main>
+  <ul id="users">
+    <li>
+      <!-- Для кожного <app-user> Angular створює екземпляр UserComponent, передає дані (avatar і name),
+обчислює imagePath і рендерить шаблон user.component.html (кнопку з аватаром і ім’ям).		
+Як Angular "бачить" зміни?
+Angular використовує механізм change detection (виявлення змін). Якщо дані в users зміняться (наприклад, через нову логіку),
+Angular перевірить прив’язки ([avatar] і [name]) і оновить лише ті <app-user>, які залежать від змін.
+(select)="onSelectUser($event)" — слухає подію select від UserComponent і викликає метод onSelectUser у AppComponent з аргументом $event.
+тег <app-user> має прив’язку до події через (select) (зверніть увагу на круглі дужки, на відміну від квадратних для @Input)
+(select)="onUserSelected($event)" слухає подію select, яку видає UserComponent. Коли подія спрацьовує, Angular викликає метод onUserSelected у AppComponent,
+передаючи аргумент $event (значення, надіслане через .emit()).
+-->
+      <app-user [user]="users[0]" (select)="onSelectUser($event)" />
+    </li>
+    <li>
+      <app-user [user]="users[1]" (select)="onSelectUser($event)" />
+    </li>
+    <li>
+      <app-user [user]="users[2]" (select)="onSelectUser($event)" />
+    </li>
+    <li>
+      <app-user [user]="users[3]" (select)="onSelectUser($event)" />
+    </li>
+  </ul>
+
+  <!--   <app-tasks [name]="selectedUser ? selectedUser.name : ''" /> або -->
+
+  <app-tasks [name]="selectedUser?.name" />
+</main>
+
+<!-- Проста схема процесу
+
+AppComponent → Передає users[0].avatar і users[0].name через [avatar] і [name].
+UserComponent → Приймає дані через @Input, обчислює imagePath, і передає їх у свій шаблон.
+Шаблон UserComponent → Рендерить <img> і <span> із обчисленими значеннями.
+Angular → Вставляє результат у <app-user> у app.component.html.
+Angular "зв’язує" компоненти через selector і прив’язки ([ ]). Дані течуть від батьківського компонента (AppComponent) до дочірнього (UserComponent),
+де обробляються й рендеряться.
+Немає зворотного "повернення" — це односторонній потік даних із подальшим рендерингом. Якщо ще щось неясно, питай — розберемо!	
+	-->
