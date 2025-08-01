@@ -38,8 +38,11 @@ Angular перевірить прив’язки ([avatar] і [name]) і оно�
   </ul>
 
   <!--   <app-tasks [name]="selectedUser?.name" /> або -->
-
-  <app-tasks [name]="selectedUser ? selectedUser.name : ''" />
+  @if(selectedUser) {
+  <app-tasks [name]="selectedUser.name" />
+  }@else {
+  <p id="fallback">Select a user to see their tasks!</p>
+  }
 </main>
 
 <!-- Проста схема процесу
