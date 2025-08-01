@@ -20,8 +20,7 @@ Angular використовує механізм прив’язки власт
 -->
 <main>
   <ul id="users">
-    <li>
-      <!-- Для кожного <app-user> Angular створює екземпляр UserComponent, передає дані (avatar і name),
+    <!-- Для кожного <app-user> Angular створює екземпляр UserComponent, передає дані (avatar і name),
 обчислює imagePath і рендерить шаблон user.component.html (кнопку з аватаром і ім’ям).		
 Як Angular "бачить" зміни?
 Angular використовує механізм change detection (виявлення змін). Якщо дані в users зміняться (наприклад, через нову логіку),
@@ -31,22 +30,16 @@ Angular перевірить прив’язки ([avatar] і [name]) і оно�
 (select)="onUserSelected($event)" слухає подію select, яку видає UserComponent. Коли подія спрацьовує, Angular викликає метод onUserSelected у AppComponent,
 передаючи аргумент $event (значення, надіслане через .emit()).
 -->
-      <app-user [user]="users[0]" (select)="onSelectUser($event)" />
-    </li>
+    @for (user of users; track user.id) {
     <li>
-      <app-user [user]="users[1]" (select)="onSelectUser($event)" />
+      <app-user [user]="user" (select)="onSelectUser($event)" />
     </li>
-    <li>
-      <app-user [user]="users[2]" (select)="onSelectUser($event)" />
-    </li>
-    <li>
-      <app-user [user]="users[3]" (select)="onSelectUser($event)" />
-    </li>
+    }
   </ul>
 
-  <!--   <app-tasks [name]="selectedUser ? selectedUser.name : ''" /> або -->
+  <!--   <app-tasks [name]="selectedUser?.name" /> або -->
 
-  <app-tasks [name]="selectedUser?.name" />
+  <app-tasks [name]="selectedUser ? selectedUser.name : ''" />
 </main>
 
 <!-- Проста схема процесу
