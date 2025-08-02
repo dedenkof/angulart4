@@ -32,7 +32,11 @@ Angular перевірить прив’язки ([avatar] і [name]) і оно�
 -->
     @for (user of users; track user.id) {
     <li>
-      <app-user [user]="user" (select)="onSelectUser($event)" />
+      <app-user
+        [user]="user"
+        [selected]="user.id === selectedUserID"
+        (select)="onSelectUser($event)"
+      />
     </li>
     }
   </ul>
