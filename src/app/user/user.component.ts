@@ -1,18 +1,6 @@
 import { Component, EventEmitter, Input, Output, output } from '@angular/core';
+import { type User } from './user.model';
 
-// Тип
-// type User = {
-// 		id: string;
-// 		avatar: string;
-// 		name: string;
-// 	}
-
-	// Інтерфейс
-interface User {
-		id: string;
-		avatar: string;
-		name: string;
-	}
 
 // У user.component.ts є декоратор @Component
 @Component({
@@ -35,6 +23,11 @@ export class UserComponent {
 
 	@Input({required: true}) user!: User;
 
+// Тому, щоб реалізувати цю функцію підсвічування, і додайте сюди ще одye вхідну властивість,
+// яку я назву selected і тип якої має бути логічним. Отже, true або false,
+
+@Input({required: true}) selected!: boolean;
+
 // v1 - @Output
 // частиною механізму обробки подій у Angular для передачі даних від дочірнього компонента до батьківського
 // @Output() позначає, що компонент UserComponent може надсилати дані (події) до батьківського компонента (наприклад, AppComponent).
@@ -42,6 +35,8 @@ export class UserComponent {
 // new EventEmitter() — це об’єкт, який дозволяє надсилати події з використанням методу .emit().
 // дозволяє надсилати подію select до батьківського компонента.
 	@Output() select = new EventEmitter<string>();
+
+
 
 // v2 - output function
 //select = output<string>(); замінює @Output() select = new EventEmitter<string>();.
