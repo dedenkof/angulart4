@@ -16,7 +16,7 @@ export class TasksComponent {
 	// або якщо ім'я не визначено спочатку, воно
 // може містити рядок, але також може бути невизначеним.
 // @Input() name: string | undefined;
-
+// отримали від батьківського компонента
 	@Input({required: true}) userId!: string;
 	@Input({required: true}) name!: string;
 
@@ -31,7 +31,7 @@ export class TasksComponent {
     },
     {
       id: 't2',
-      userId: 'u2',
+      userId: 'u3',
       title: 'Build first prototype',
       summary: 'Build a first prototype of the online shop website',
       dueDate: '2024-05-31',
@@ -46,8 +46,20 @@ export class TasksComponent {
     },
   ];
 
+	// Значення залежить від this.tasks після onCompleteTask (id: string)
+	// тобто ми відображаємо ті задачі у випадку якщо значення масиву
+	// task.userId === значенню яке ми отримали від батьківського компонента @Input({required: true}) userId!: string;
 	get selectedUserTasks () {
 		return this.tasks.filter((task) => task.userId === this.userId);
 	}
 
+	// this.tasks перезаписується цим новим масивом що містить тільки незавершені задачі, замінюючи старий.
+	// Перезапис this.tasks: Оскільки this.tasks — це властивість класу TasksComponent, її зміна сигналізує Angular про оновлення стану.
+// Change Detection: Angular автоматично запускає цикл виявлення змін, коли this.tasks змінюється. Він:
+//Помічає, що this.tasks оновлено.
+//Перераховує геттер get selectedUserTasks(), який залежить від this.tasks.
+//Оновлює шаблон tasks.component.html, де @for (task of selectedUserTasks; track task.id) перерендерить <ul>, відображаючи лише залишені завдання.
+	onCompleteTask (id: string) {
+		this.tasks = this.tasks.filter((task) => task.id !== id);
+	}
 }
