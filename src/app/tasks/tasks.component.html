@@ -1,11 +1,15 @@
 <!-- {{ name }}: Це інтерполяція, яка відображає значення змінної name, передане через @Input.
 	Наприклад, якщо name дорівнює 'Іван', на сторінці з’явиться <h2>Іван</h2>. -->
 
+@if ( isAddingTask ) {
+<app-new-task (cancel)="onCancelAddTask()" />
+}
+
 <section id="tasks">
   <header>
     <h2>{{ name }}</h2>
     <menu>
-      <button>Add Task</button>
+      <button (click)="onStartAddTask()">Add Task</button>
     </menu>
   </header>
 
