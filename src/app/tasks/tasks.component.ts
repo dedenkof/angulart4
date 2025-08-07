@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
+import { NewTaskComponent } from "./new-task/new-task.component";
 
 // @Component: Визначає компонент із селектором app-tasks, який буде вставлятися в шаблон як <app-tasks>
 @Component({
   selector: 'app-tasks',
   standalone: true,
-  imports: [TaskComponent],
+  imports: [TaskComponent, NewTaskComponent],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css'
 })
@@ -19,6 +20,9 @@ export class TasksComponent {
 // отримали від батьківського компонента
 	@Input({required: true}) userId!: string;
 	@Input({required: true}) name!: string;
+
+	// Властивість від якої буде залежати відображення компонента додавання таски
+	isAddingTask = false;
 
 	tasks = [
     {
@@ -62,4 +66,13 @@ export class TasksComponent {
 	onCompleteTask (id: string) {
 		this.tasks = this.tasks.filter((task) => task.id !== id);
 	}
+
+	onStartAddTask() {
+		this.isAddingTask = true;
+	}
+// скасування (закриття форми по кліку Cancel та backdrop)
+	onCancelAddTask() {
+		this.isAddingTask = false;
+	}
+
 }
