@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
 import { NewTaskComponent } from "./new-task/new-task.component";
+import { type NewTaskData } from './task/task.model';
 
 // @Component: Визначає компонент із селектором app-tasks, який буде вставлятися в шаблон як <app-tasks>
 @Component({
@@ -72,6 +73,17 @@ export class TasksComponent {
 	}
 // скасування (закриття форми по кліку Cancel та backdrop)
 	onCancelAddTask() {
+		this.isAddingTask = false;
+	}
+
+	onAddtask (taskData: NewTaskData) {
+		this.tasks.push({
+			id: new Date().getTime().toString(),
+      userId: this.userId,
+      title: taskData.title,
+      summary: taskData.summary,
+      dueDate: taskData.date
+		})
 		this.isAddingTask = false;
 	}
 
