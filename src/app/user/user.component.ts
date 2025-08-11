@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output, output } from '@angular/core';
 import { type User } from './user.model';
+import { CardComponent } from "../shared/card/card.component";
 
 
 // У user.component.ts є декоратор @Component
 @Component({
   selector: 'app-user', // Цей рядок говорить Angular, що тег <app-user> у шаблоні (app.component.html) відповідає компоненту UserComponent.
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
