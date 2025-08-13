@@ -12,13 +12,11 @@ import { DUMMY_USERS } from "./dummy-users";
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-	// У класі AppComponent визначено змінну users, яка отримує дані з DUMMY_USERS (масив об’єктів із полями name і avatar).
-	// Ця змінна доступна в шаблоні app.component.html, тому що Angular автоматично робить усі публічні властивості компонента
-	// доступними для прив’язки в шаблоні.
+	// У класі AppComponent визначено змінну users, яка отримує дані з DUMMY_USERS - доступна в шаблоні app.component.html,
+	// тому що Angular автоматично робить усі публічні властивості компонента доступними для прив’язки в шаблоні.
 	// Масив із даними користувачів, доступний у компоненті.
 	users = DUMMY_USERS;
-
-// Початкове значення прибираємо.
+	
 	selectedUserID?: string;
 
 	// Геттер, який шукає користувача в users за selectedUserID за допомогою find.

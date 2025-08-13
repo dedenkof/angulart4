@@ -1,10 +1,8 @@
-<!-- Що відбувається?
-(click)="onSelectUser()" — при натисканні кнопки викликає метод onSelectUser().
+<!--(click)="onSelectUser()" — при натисканні кнопки викликає метод onSelectUser().
 [src]="imagePath": Angular викликає геттер imagePath і підставляє результат (наприклад, 'assets/users/user1.jpg') в атрибут src тега <img>.
 [alt]="name": Значення name (наприклад, 'Іван') передається в атрибут alt.
 {{ name }}: Ім’я відображається як текст у <span>.
-Повернення? Немає прямого "повернення" даних назад у AppComponent. Дані обробляються в UserComponent,
-і результат (HTML із зображенням і текстом) рендериться в тому місці, де стоїть <app-user> у app.component.html. -->
+Дані обробляються в UserComponent - результат рендериться в тому місці, де стоїть <app-user> у app.component.html. -->
 
 	<app-card>
   <button [class.active]="selected" (click)="onSelectUser()">
