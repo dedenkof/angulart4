@@ -29,6 +29,16 @@ export class TasksService {
     },
   ];
 
+	constructor() {
+		const tasks= localStorage.getItem('tasks');
+		// Якщо дані в localStorage є (це рядок у форматі JSON), вони парсяться в масив і замінюють this.tasks.
+			if (tasks) {
+		this.tasks = JSON.parse(tasks);
+	}
+	}
+
+
+
 	getUserTasks (userId: string) {
 		return this.tasks.filter((task) => task.userId === userId);
 	}
@@ -41,9 +51,16 @@ export class TasksService {
       summary: taskData.summary,
       dueDate: taskData.date
 		})
+		this.saveTasks();
 	}
 
 	removeTask (id: string) {
 		this.tasks = this.tasks.filter((task) => task.id !== id);
+		this.saveTasks();
+	}
+
+	// Конвертує this.tasks у JSON-рядок і зберігає в localStorage під ключем 'tasks'.
+	private saveTasks () {
+		localStorage.setItem('tasks', JSON.stringify(this.tasks));
 	}
 }
