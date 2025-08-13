@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { TaskComponent } from "./task/task.component";
 import { NewTaskComponent } from "./new-task/new-task.component";
 import { type NewTaskData } from './task/task.model';
+import { TasksService } from './tasks.service';
 
 // @Component: Визначає компонент із селектором app-tasks, який буде вставлятися в шаблон як <app-tasks>
 @Component({
@@ -25,37 +26,23 @@ export class TasksComponent {
 	// Властивість від якої буде залежати відображення компонента додавання таски
 	isAddingTask = false;
 
-	tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary:
-        'Learn all the basic and advanced features of Angular & how to apply them.',
-      dueDate: '2025-12-31',
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'Build a first prototype of the online shop website',
-      dueDate: '2024-05-31',
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issue template',
-      summary:
-        'Prepare and describe an issue template which will help with project management',
-      dueDate: '2024-06-15',
-    },
-  ];
+	// 1 варіант
+	// private tasksService : TasksServiсe;
+	// constructor(tasksService : TasksServiсe) {
+	// 	this.tasksService = tasksService;
+	// }
+
+	// 2 варіант
+	constructor(private tasksService : TasksService) {
+		this.tasksService = tasksService;
+ }
+
 
 	// Значення залежить від this.tasks після onCompleteTask (id: string)
 	// тобто ми відображаємо ті задачі у випадку якщо значення масиву
 	// task.userId === значенню яке ми отримали від батьківського компонента @Input({required: true}) userId!: string;
 	get selectedUserTasks () {
-		return this.tasks.filter((task) => task.userId === this.userId);
+		return this.tasksService.getUserTasks (this.userId);
 	}
 
 	// this.tasks перезаписується цим новим масивом що містить тільки незавершені задачі, замінюючи старий.
@@ -64,27 +51,21 @@ export class TasksComponent {
 //Помічає, що this.tasks оновлено.
 //Перераховує геттер get selectedUserTasks(), який залежить від this.tasks.
 //Оновлює шаблон tasks.component.html, де @for (task of selectedUserTasks; track task.id) перерендерить <ul>, відображаючи лише залишені завдання.
-	onCompleteTask (id: string) {
-		this.tasks = this.tasks.filter((task) => task.id !== id);
-	}
+	// onCompleteTask (id: string) { видаляємо
+		
+	// }
 
 	onStartAddTask() {
 		this.isAddingTask = true;
 	}
 // скасування (закриття форми по кліку Cancel та backdrop)
-	onCancelAddTask() {
+	onCloseAddTask() {
 		this.isAddingTask = false;
 	}
 
-	onAddtask (taskData: NewTaskData) {
-		this.tasks.push({
-			id: new Date().getTime().toString(),
-      userId: this.userId,
-      title: taskData.title,
-      summary: taskData.summary,
-      dueDate: taskData.date
-		})
-		this.isAddingTask = false;
-	}
+	// onAddtask (taskData: NewTaskData) { // видаляємо бо більше не запускаємо його
+		
+	// 	this.isAddingTask = false;
+	// }
 
 }
